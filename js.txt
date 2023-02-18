@@ -1,35 +1,34 @@
-var eventTypeSelect = document.getElementById('event-type');
-var eventLocationDiv = document.getElementById('event-location');
-var eventUrlDiv = document.getElementById('event-url');
+// Get the registered participants data from the server
+const participants = getParticipantsData();
 
-// Show or hide the location and URL fields based on the event type
-eventTypeSelect.addEventListener('change', function() {
-  if (eventTypeSelect.value === 'offline') {
-    eventLocationDiv.classList.remove('hidden');
-    eventUrlDiv.classList.add('hidden');
-  } else if (eventTypeSelect.value === 'online') {
-    eventLocationDiv.classList.add('hidden');
-    eventUrlDiv.classList.remove('hidden');
-  }
+// Sort the participants by registration date in descending order
+participants.sort((a, b) => new Date(b.registrationDate) - new Date(a.registrationDate));
+
+// Add the participants to the table
+const participantTableBody = document.getElementById('participant-table-body');
+participants.forEach((participant) => {
+  const row = participantTableBody.insertRow(0);
+  row.insertCell(0).innerHTML = participant.name;
+  row.insertCell(1).innerHTML = participant.email;
+  row.insertCell(2).innerHTML = participant.phone;
+  row.insertCell(3).innerHTML = participant.event;
+  row.insertCell(4).innerHTML = participant.registrationDate;
+  row.insertCell(5).innerHTML = '<button>Edit</button> <button>Delete</button>';
 });
 
-// Validate the form before submitting
-var form = document.querySelector('form');
-var eventNameInput = document.getElementById('event-name');
-var eventDateTimeInput = document.getElementById('event-date-time');
-var organizerNameInput = document.getElementById('organizer-name');
-var organizerEmailInput = document.getElementById('organizer-email');
-var organizerMobileInput = document.getElementById('organizer-mobile');
-var organizerAddressInput = document.getElementById('organizer-address');
-var seatsAvailableInput = document.getElementById('seats-available');
-var errorDiv = document.getElementById('error');
-
-form.addEventListener('submit', function(event) {
-  if (!eventNameInput.value || !eventDateTimeInput.value || !organizerNameInput.value || !organizerEmailInput.value || !organizerMobileInput.value || !organizerAddressInput.value || !seatsAvailableInput.value) {
-    event.preventDefault();
-    errorDiv.innerHTML = 'Please fill out all required fields.';
-  } else {
-    errorDiv.innerHTML = '';
-  }
+// Add search functionality
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', () => {
+  const searchText = searchInput.value.toLowerCase();
+  participants.forEach((participant) => {
+    const row = document.getElementById(`participant-${participant.id}`);
+    if (row) {
+      if (participant.name.toLowerCase().includes(searchText) ||
+          participant.email.toLowerCase().includes(searchText)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+  });
 });
-
