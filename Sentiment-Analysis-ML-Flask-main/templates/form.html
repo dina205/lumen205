@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opinion Mining</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h3 {
+            font-weight: bold;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        p {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Opinion Mining &#x1F4AC;</h1>
+    <form method="POST">
+        <label for="text1">Enter your text:</label><br>
+        <textarea id="text1" name="text1" rows="10" cols="50"></textarea><br><br>
+        <button type="submit">&#x1F4A1; Submit</button>
+    </form>
+    {% if final %}
+    <br><br>
+    <h3>Sentiment Analysis &#x1F50A;</h3>
+    <p><strong>&#x1F44D; Positive:</strong> {{ text2 }}</p>
+    <p><strong>&#x1F44E; Negative:</strong> {{ text5 }}</p>
+    <p><strong>&#x1F610; Neutral:</strong> {{ text3 }}</p>
+    <p><strong>&#x1F4AF; Compound:</strong> {{ text4 }}</p>
+    {% endif %}
+    {% if opinion_words %}
+    <br><br>
+    <h3>Opinion Words &#x1F4AC;</h3>
+    <p>{% for word in opinion_words %}{{ word }} {% endfor %}</p>
+    {% endif %}
+    {% if target_words %}
+    <br><br>
+    <h3>Target Words &#x1F4AC;</h3>
+    <p>{% for word in target_words %}{{ word }} {% endfor %}</p>
+    {% endif %}
+</body>
+</html>
